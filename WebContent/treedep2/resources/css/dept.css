@@ -1,0 +1,15 @@
+.dept_table{
+    background-image: url(/Learning-extjs4.0/lesson/18/resources/img/dept_table.png) !important;
+}
+.dept_tree{
+    background-image: url(/Learning-extjs4.0/lesson/18/resources/img/dept_tree.png) !important;
+}
+.table_remove{
+	background-image: url(/Learning-extjs4.0/lesson/18/resources/img/table_remove.gif) !important;
+}
+.table_add{
+	background-image: url(/Learning-extjs4.0/lesson/18/resources/img/table_add.png) !important;
+}
+.table_save{
+	background-image: url(/Learning-extjs4.0/lesson/18/resources/img/tabel_save.png) !important;
+}

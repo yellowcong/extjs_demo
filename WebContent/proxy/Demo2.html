@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		// 内存代理,是最基本的代理方法
+		Ext.regModel("User",{
+			field:[   {name: 'name',  type: 'string'},
+					{name: 'emial',  type: 'string'},
+					{name: 'phone',  type: 'string'},
+					  {name: 'age',  type: 'int'},
+			],
+			
+		});
+		
+		
+		// 生成3条数据
+		var datas = [
+			{name:"yellowcong",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"zhang3feng",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"xiaophai",emial:"717350389@qq.com",phone:"15335761939",age:20},
+		];
+		
+		// 创建代理类
+		var proxy = Ext.create("Ext.data.proxy.Memory",{
+			// 创建Data 数据
+			data:datas,
+			// 创建模型
+			model:'User'
+		});
+		
+			
+		
+		//读取数据
+		proxy.read(new Ext.data.Operation(),function(data){
+			// 反回的对象
+			// Object { resultSet: Object, complete: true, running: false,
+			// success: true }
+			console.log(data);
+			
+			var users = data.resultSet.records;
+			
+			// 获取所有的数据
+			Ext.each(users,function(user){
+				// 返回一个代理对象
+				// Object { raw: Object, modified: Object, data: Object,
+				// hasListeners: Object, events: Object, stores: Array[0],
+				// phantom: false, internalId: "ext-record-2", id:
+				// "User-ext-record-2" }
+				console.log(user);
+				// 返回
+				// Object { name: "zhang3feng", emial: "717350389@qq.com",
+				// phone: "15335761939", age: 20 }
+				console.log(user.raw);
+				// 访问raw中的数据
+				console.log(user.raw.name);
+			});
+		});
+		
+		
+		//更新数据现在有点问题
+		// 添加了一跳数据
+		datas.push({name:"xxx",emial:"717350389@qq.com",phone:"15335761939",age:20});
+		console.log(datas.length);
+		
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

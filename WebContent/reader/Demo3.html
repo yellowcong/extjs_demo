@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		
+		//定义Department对象
+		Ext.regModel("Dep",{
+			field:[
+				{name:"name",type:'string'}
+			],
+			hasMany: {model: 'Emp', name: 'emps'}
+		});
+		
+		//定义Employee对象
+		Ext.regModel("Emp",{
+			field:[
+				{name:"name",type:'string'}
+			],
+			//管理关系中  多对一和 一对一的配置一样
+			associations: [{ type: 'belongsTo', model: 'Dep' }]
+		});
+		
+		
+		//添加对象数组的时候，我们需要对数据进行解析，使用reader
+		var dep  ={
+			xxx:"xxx",
+			total:100,
+			dep:[{xx:"xxx",info:{
+							name:'yellowcong',
+							Emp:[{name:"zhangxx"},{name:"yellowcong"},{name:"xiaophai"}],
+						} },
+				    
+			]
+		
+		};
+		//通过
+		var proxy = Ext.create("Ext.data.proxy.Memory",{
+			model:"Dep",
+			data:dep,
+			reader:{
+				type:'json',
+				//这个root 需要和我们dep这个数据中的 节点一样
+				root:'dep',
+				//设定统计的信息，设定数据条数，覆盖原有的记录条数
+				totalProperty:"total",
+				//过滤 dep 中的一些节点数据,过滤 dep中有的一些不需要的数据
+				record:'info'
+			}
+		});
+		
+		proxy.read(new Ext.data.Operation(),function(data){
+			console.log(data);
+			//获取读取的对象
+			var users = data.resultSet.records;
+			
+			//这个属性，是被声明为统计的字段
+			console.log(data.resultSet.totalRecords);
+			
+			Ext.each(users,function(dep_raw){
+				//获取到一跳数据
+				var dep = dep_raw.raw;
+				console.log(dep);
+				
+				//然后便利数据
+				var emps = dep.Emp;
+				Ext.each(emps,function(emp){
+					console.log(emp);
+				});
+				
+			})
+		});
+		
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		
+		//定义模型
+		Ext.regModel("User",{
+			fields:[
+				{name:"name",type:"string"}
+			],
+			//配置代理
+			proxy:{
+				type:"memory",
+			}
+		});
+		
+		
+		//定义User 对象
+		var users = [{name:"yellowcong"},{name:"zhang3feng"},{name:"xiaozhang"}];
+		
+		var store = Ext.create("Ext.data.Store",{
+//			model:'User',
+			data:users,
+			//自动加载数据, 需要和proxy中的配置联用
+//			autoLoad:true
+			//配置字段，配置了这个，我们就不需要model配置 了
+			fields:[{name:"name",type:"string"}],
+			//配置代理对象
+			//当我们配置proxy 是ajax的时候，就会异步加载，解决方法就是通过 Stroe的load方法，然后设定autoLoad:false
+//			proxy:{},
+			
+		});
+		
+		
+		//便利数据
+		store.each(function(users){
+			//返回对象 
+			//Object { raw: Object, modified: Object, data: Object, hasListeners: Object, events: Object, stores: Array[1], phantom: false, internalId: "ext-record-1", id: "User-ext-record-1", index: 0, 等 1 项… }
+			console.log(users);
+			
+			//获取对象
+			var user = users.raw;
+			console.log(user.name);
+		
+		});
+		
+		//查找数据
+		//返回索引
+		var user_index = store.find('name','yellowcong');
+		console.log(user_index);
+		
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

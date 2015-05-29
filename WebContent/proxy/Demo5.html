@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		// 内存代理,是最基本的代理方法
+		Ext.regModel("User",{
+			field:[   {name: 'name',  type: 'string'},
+					{name: 'emial',  type: 'string'},
+					{name: 'phone',  type: 'string'},
+					  {name: 'age',  type: 'int'},
+			],
+			proxy: {
+				//设定为Session级别的存储
+		        type: 'sessionstorage',
+		        id  : 'twitter-Searches'
+		    }
+			
+		});
+		
+		
+		// 生成3条数据
+		var datas = [
+			{name:"yellowcong",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"zhang3feng",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"xiaophai",emial:"717350389@qq.com",phone:"15335761939",age:20},
+		];
+		
+
+		
+		//通过Ext.data.Store 和localstorage结合操作
+		var store = Ext.create("Ext.data.Store",{model: 'User'});
+		//加载
+		store.load();
+		//添加数据
+		store.add(datas);
+		//保存
+		store.sync();
+		
+		//获取长度
+		console.log(store.data.length);
+		
+		//获取数据 
+		store.each(function(data){
+//			console.log(data);
+			user = data.raw;
+			console.log(user.name);
+		});
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

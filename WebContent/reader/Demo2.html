@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		
+		//定义Department对象
+		Ext.regModel("Dep",{
+			field:[
+				{name:"name",type:'string'}
+			],
+			hasMany: {model: 'Emp', name: 'emps'}
+		});
+		
+		//定义Employee对象
+		Ext.regModel("Emp",{
+			field:[
+				{name:"name",type:'string'}
+			],
+			//管理关系中  多对一和 一对一的配置一样
+			associations: [{ type: 'belongsTo', model: 'Dep' }]
+		});
+		
+		
+		//创建对象
+		var dep = Ext.create("Dep",{
+			name:'yellowcong',
+			Emp:[{name:"zhangxx"},{name:"yellowcong"},{name:"xiaophai"}],
+		});
+		
+		//通过
+		var proxy = Ext.create("Ext.data.proxy.Memory",{
+			model:"Dep",
+			data:dep
+		});
+		
+		proxy.read(new Ext.data.Operation(),function(data){
+			//获取读取的对象
+			var users = data.resultSet.records;
+			
+			Ext.each(users,function(dep_raw){
+				var dep =dep_raw.raw;
+				console.log(dep);
+				
+				var emps = dep.Emp;
+				//获取里面的多对一，多的一方
+				Ext.each(emps,function(emp){
+					console.log(emp);
+				});				
+			})
+		});
+		
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<!--导入中文包-->
+<script type="text/javascript" src="../resources/js/extjs/locale/ext-lang-zh_CN.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的事件
+	Ext.onReady(function(){
+		
+		//创建模型对象
+		Ext.regModel("User",{
+			fields:[{name:"name",type:"string",sortable:true},
+					{name:"age",type:"int",sortable:true},
+					{name:"email",type:"string",sortable:true},
+					{name:"phone",type:"string",sortable:true},
+					],
+		});
+		
+		
+		var users = [{name:"yellowcong",age:20,phone:"18645171561",email:"717350389@qq.com"},
+		{name:"zhangxx",age:12,phone:"18645171561",email:"717350389@qq.com"},
+		{name:"xiaophai",age:2,phone:"18645171561",email:"717350389@qq.com"},
+		{name:"狂飙のyellowcong",age:111,phone:"18645171561",email:"717350389@qq.com"}];
+		
+		//创建 
+		//storeId , 谢了storeId 就可以通过StoreManage管理
+		Ext.create("Ext.data.Store",{
+			//设定id
+			storeId:"s_user",
+			model:"User",
+			data:users
+		});
+		
+		//初始化
+		Ext.QuickTips.init();
+		
+		//创建一个高级的GRID的组件，会用到gird面板
+		
+		//创建一个panel 
+		var grid = Ext.create("Ext.grid.Panel",{
+			//标签
+			title:"用户列表",
+			//设定宽和高
+			width:1024,
+			height:300,
+			//开启表格渲染
+			frame:true,
+			//自动填充   列宽
+			forceFit:true,
+			//表格列表字段
+			columns:[
+				//text 是显示名称
+				//dataIndex 是我我们获取数据名称
+				//width 设定每栏宽度
+				//field 设定数据类型
+				{text:"姓名",dataIndex:"name",width:100},
+				{text:"年龄",dataIndex:"age",width:200},
+				{text:"邮箱",dataIndex:"email",
+					field:{
+						//设定文本
+						xtype:"textfield",
+						//不能有空格
+						allowBlank:false,
+					}
+				},
+				{text:"联系电话",dataIndex:"phone"},
+			],
+			
+			//添加按钮
+			tbar:[
+				{xtype:'button',text:"添加",iconCls:'table_add'},
+				// xtype 显示 央视
+				//text 显示文字
+				//iconCls 按钮
+				//handler
+			      {xtype:'button',text:"删除",iconCls:'table_delete',
+			      //添加处理方法
+			      
+			      	handler:function(btn){
+				      //Object { xtype: "button", text: "添加", iconCls: "table_add", handler: grid<.tbar<.handler(), initialConfig: Object, events: Object, autoGenId: true, id: "button-1031", componentLayout: Object, componentCls: "x-btn", 等 37 项… }
+//			      		console.log(btn);
+			      		//获取文本
+//			      		console.log(btn.text);
+			      		//获取到自己的btn对象没有用，我们需要获取到grid中的数据
+			      		/*
+			      		var grid = btn.findParentByType("gridpanel");
+			      		//反回grid对象
+			      		//Object { title: "用户列表", width: 1024, height: 300, frame: true, forceFit: true, columns: Array[4], tbar: null, dockedItems: Object, selType: "checkboxmodel", renderTo: "box", 等 53 项… }
+			      		console.log(grid);
+			      		//获取记录条数
+			      		console.log(grid.getStore().getCount());
+			      		*/
+			      		
+			      		//第二种方法
+			      		//获取两次父类
+			      		var grid = btn.ownerCt.ownerCt;
+			      		console.log(grid.getStore().getCount());
+			      		
+			      		var stors = grid.getStore();
+			      		//获取被选择的对象
+			      		var data_select = grid.getSelectionModel().getSelection();
+			      		
+			      		//判断是否有数据
+			      		if(data_select.length ==0){
+			      			Ext.MessageBox.alert("Info","必须选择数据");
+			      		}else{
+			      			//有数据的情况
+			      			var ids = [];
+			      			//获取添加的数据数据
+			      			Ext.each(data_select,function(data){
+//			      				console.log(data);
+			      				var user = data.raw;
+//			      				console.log(user.name);
+			      				ids.push(user.name);
+			      			});
+			      			//获取的数据
+			      			console.log(ids.join(","));
+			      			//发送请求
+			      			Ext.Ajax.request({
+			      				url:'person.jsp',
+			      				//传递数组数据过去
+			      				params:{ids:ids.join(",")},
+			      				method:"POST",
+			      				timeout:3000,
+			      				//单词不要拼错了
+			      				success:function(response,opts){
+						      		//删除数据		
+			      					Ext.each(data_select,function(data){
+			      						//这个是获取Store 是我们获取Grid 来获取的
+			      						console.log(data)
+			      						//删除数据
+			      						stors.remove(data);
+			      					});
+			      					
+			      				},failure: function(record, operation) {
+			      					
+			      						console.log(record);
+		    					},
+
+			      			});
+			      		}
+			      	}
+			      },
+			      
+			      {xtype:'button',text:"修改",iconCls:'table_editor'},
+			      {xtype:'button',text:"查询",iconCls:'table_find'},
+			      {xtype:'button',text:"帮助",iconCls:'table_help'},
+			      {xtype:'button',text:"保存",iconCls:'table_save'},
+			      {xtype:'button',text:"接受",iconCls:'table_accept'},
+			      {xtype:'button',text:"下载",iconCls:'table_download'},
+			      {xtype:'button',text:"错误",iconCls:'table_error'},
+			      {xtype:'button',text:"过滤",iconCls:'table_filter_grey'},
+			      {xtype:'button',text:"过滤",iconCls:'table_filter'},
+			      {xtype:'button',text:"查找",iconCls:'table_find_grey'},
+			      {xtype:'button',text:"全球",iconCls:'table_globe_place'},
+			      {xtype:'button',text:"锁",iconCls:'table_lock'},
+			      {xtype:'button',text:"打印",iconCls:'table_printer'},
+			      {xtype:'button',text:"信息",iconCls:'table_server_info'},
+			      {xtype:'button',text:"更新",iconCls: 'table_refresh'},
+			      {xtype:'button',text:"垃圾箱",iconCls:'table_server_trash'},
+			      ],
+			//添加下面的工具
+			dockedItems:[
+			    //分页工具栏 
+				{xtype:'pagingtoolbar',
+				//通过Id 查询我们的 store 数据
+				store:Ext.data.StoreManager.lookup("s_user"),
+				//底部显示
+				dock:'bottom',
+				displayInfo:true,
+				} 
+			],
+			plugins:[
+				Ext.create("Ext.grid.plugin.CellEditing",{
+					//设定单机一次	
+					clicksToEdit:1
+				})
+			],
+			//多选框模式
+			selType:'checkboxmodel',
+			//多选模式
+//			multiSelect:true,
+			//渲染的DIV
+			renderTo:"box",
+			
+			//通过Id 查询我们的 store 数据
+			store:Ext.data.StoreManager.lookup("s_user"),
+			
+		});
+		
+	})
+</script>
+<link href="../resources/css/icon/common.css"type="text/css" rel="stylesheet"/>
+<style type="text/css">
+</style>
+
+</head>
+<body>
+	<div id="box" style="margin-left: 50px;margin-top:40px;"></div>
+
+	<div class="table_add" id="xxxx">xx</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+/**
+ * ClassName 部门实体数据集
+ */
+Ext.define("AM.store.DeptStore",{
+	extend:'Ext.data.Store',
+	model:'AM.model.DeptModel',
+	proxy:{
+		type:'ajax',
+		url:'/extjs/extjs!readDeptForGrid.action',
+		reader:{
+			type:'json',
+			root:'topics'
+		},
+		writer:{
+			type:'json'
+		}
+	},
+	autoLoad:true
+});

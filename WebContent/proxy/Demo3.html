@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		// 内存代理,是最基本的代理方法
+		Ext.regModel("User",{
+			field:[   {name: 'name',  type: 'string'},
+					{name: 'emial',  type: 'string'},
+					{name: 'phone',  type: 'string'},
+					  {name: 'age',  type: 'int'},
+			],
+			
+		});
+		
+		
+		// 生成3条数据
+		var datas = [
+			{name:"yellowcong",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"zhang3feng",emial:"717350389@qq.com",phone:"15335761939",age:20},
+			{name:"xiaophai",emial:"717350389@qq.com",phone:"15335761939",age:20},
+		];
+		
+
+		
+		//通过Ext.data.Store 和Memory结合操作
+		var store = Ext.create("Ext.data.Store",{
+			 autoLoad: true,
+			    model: 'User',
+			    data : datas,
+			    proxy:{
+			    	type: 'memory',
+			        reader: {
+			            type: 'json',
+			            root: 'users'
+			        }
+			    }
+		});
+		
+		//查看我们的store 对象
+		console.log(store);
+		store.load();
+		
+		//获取长度
+		//通过data属性，获取长度
+		var count = store.data.length;
+		console.log(count);
+		
+		//便利数据，这个是Ext.data.Store 对象中的方法
+		store.each(function(data){
+			//返回的是一个
+//			console.log(data);
+			//获取数据
+			//Object { name: "yellowcong", emial: "717350389@qq.com", phone: "15335761939", age: 20 }
+			user = data.raw;
+//			console.log(user);
+			//访问对象中的属性
+			console.log(user.name);
+		});
+		
+		
+		
+		
+		//添加数据
+		store.add({ name: "zhangxx", emial: "717350389@qq.com", phone: "15335761939", age: 20 });
+		//保存
+		store.sync();
+		console.log(store);
+		
+		
+		console.log("第二次");
+		//加载数据
+		console.log(store.data.length);
+			//便利数据，这个是Ext.data.Store 对象中的方法
+		store.each(function(data){
+			//返回的是一个
+//			console.log(data);
+			//获取数据
+			//Object { name: "yellowcong", emial: "717350389@qq.com", phone: "15335761939", age: 20 }
+			user = data.raw;
+//			console.log(user);
+			//访问对象中的属性
+			console.log(user.name);
+		});
+		
+		
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

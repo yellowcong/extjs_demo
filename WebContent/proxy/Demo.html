@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		// 内存代理,是最基本的代理方法
+		Ext.regModel("User",{
+			field:[   {name: 'name',  type: 'string'},
+					{name: 'emial',  type: 'string'},
+					{name: 'phone',  type: 'string'},
+					  {name: 'age',  type: 'int'},
+			],
+		});
+		
+		
+		
+		var proxy = new Ext.data.proxy.Ajax({
+			//访问我们的url
+			url:'person.jsp',
+			//模型
+			model:'User',
+			//返回数据类型
+			reader: 'json',
+		});
+		
+		//查看proxy对象
+		//Object { proxyConfig: Object, url: "person.jsp", model: j(), reader: Object, hasListeners: Object, events: Object, writer: Object, extraParams: Object, api: Object, nocache: true }
+		console.log(proxy);
+		
+		//访问数据
+		//其中limit 和start  会变成参数来传递到服务器中
+		proxy.doRequest(new Ext.data.Operation({
+				action:'read',
+				limit:10,
+				start:1,
+				//这个会变成一个字段对象，传递到服务器
+				sorters:[
+					new Ext.util.Sorter({
+						//排序字段名称
+						property:'name',
+						//排序的顺序
+						direction:'ASC'
+						
+					})
+				]
+			
+		}),function(date){
+			//直接获取反悔字段
+			var result = date.response.responseText;
+			console.log(result);
+			
+			//通过decode 方法，讲字符串编码，返回一个对象
+			var res_obj = Ext.JSON.decode(result);
+			console.log(res_obj.age);
+			
+			
+			//查看反悔的包装对象
+			//查看返回数据
+			//Object { proxyConfig: Object, url: "person.jsp", model: j(), reader: Object, hasListeners: Object, events: Object, writer: Object, extraParams: Object, api: Object, nocache: true }
+			console.log(date);
+			
+			//查看result
+			//Object { params: Object, request: Object, response: Object, resultSet: Object, complete: true, running: false, success: true } 
+			console.log(date.resultSet);
+			
+			//查看记录
+			//Object { total: 1, count: 1, records: Array[1], success: true, message: undefined, totalRecords: 1 }
+			console.log(date.resultSet.records);
+			//获取所有的记录
+			var users  = date.resultSet.records;
+			
+			Ext.each(users,function(data){
+				//获取记录
+				var user = data.raw;
+				console.log(user);
+				console.log(user.name);
+			});
+		});
+		
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>

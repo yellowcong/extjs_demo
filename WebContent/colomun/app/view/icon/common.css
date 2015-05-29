@@ -1,0 +1,98 @@
+@CHARSET "UTF-8";
+/*添加数据*/
+.table_add {
+	 background-image: url(png/add.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*接受按钮*/
+ .table_accept {
+	 background-image: url(png/accept.png) ;background-repeat : no-repeat ;
+ }
+ .table_delete {
+	 background-image: url(png/delete.png) ;background-repeat : no-repeat ;
+ }
+ 
+  .table_download {
+	 background-image: url(png/download.png) ;background-repeat : no-repeat ;
+ }
+ 
+ .table_editor {
+	 background-image: url(png/edit.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*错误图标*/
+ .table_error {
+	 background-image: url(png/error.png) ;background-repeat : no-repeat ;
+ }
+ 
+  /*保存按钮*/
+ .table_save {
+	 background-image: url(png/filesave.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*灰色过滤按钮*/
+ .table_filter_grey {
+	 background-image: url(png/filter_grey.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*过滤按钮*/
+ .table_filter {
+	 background-image: url(png/filter.png) ;background-repeat : no-repeat ;
+ }
+ 
+ 
+ /*查找按钮*/
+ .table_find {
+	 background-image: url(png/find.png) ;background-repeat : no-repeat ;
+ }
+ 
+  /*查找按钮*/
+ .table_find_grey {
+	 background-image: url(png/find_grey.png) ;background-repeat : no-repeat ;
+ }
+ 
+  /*查找按钮*/
+ .table_globe_place{
+	 background-image: url(png/globe_place.png) ;background-repeat : no-repeat ;
+ }
+ 
+ 
+
+  /*帮助按钮*/
+ .table_help {
+	 background-image: url(png/help.png) ;background-repeat : no-repeat ;
+ }
+ 
+   /*锁按钮*/
+ .table_lock{
+	 background-image: url(png/lock.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*打印*/
+ .table_printer{
+	 background-image: url(png/printer.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*数据更新*/
+ .table_refresh{
+	 background-image: url(png/refresh.png) ;background-repeat : no-repeat ;
+ }
+ 
+ /*服务器信息*/
+ .table_server_info{
+	 background-image: url(png/server_information.png) ;background-repeat : no-repeat ;
+ }
+ /*更新操作*/
+ .table_refresh{
+	 background-image: url(png/refresh.png) ;background-repeat : no-repeat ;
+ }
+ /*垃圾图标*/
+ .table_server_trash{
+	 background-image: url(png/user-trash.png) ;background-repeat : no-repeat ;
+ }
+ 
+ 
+
+
+
+ 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的事件
+	Ext.onReady(function(){
+		
+		//基于dom绑定
+		Ext.get("btn2").on("click",function(){
+			console.log("第二种方法调用");
+			
+		});
+		var el = document.getElementById("btn3");
+			el.addEventListener('click',function(){
+				console.log("第三种方法调用");
+		});
+	})
+	
+	//第一中方法，最传统的方法
+	function show(){
+		console.log("第一种调用");
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="基于html" onclick="show()" id="btn1"/><br/>
+	<input type="button" value="基于extjs"  id="btn2"/><br/>
+	<input type="button" value="基于dom" id="btn3"/>
+</body>
+</html>

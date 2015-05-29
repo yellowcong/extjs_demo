@@ -1,0 +1,89 @@
+1.根类 
+	Ext.form.Basic
+		提供了,表单组件,字段管理,数据验证,表单提交,数据加载的功能
+2.表单的容器
+	Ext.form.Panel
+		容器自动关联	Ext.form.Basic 的实例对象更方便的进行字段的配置
+		重要属性
+			defaultType:"" 设置默认子项 的xtype
+3.数据交互和加载
+	Ext.form.action.Action
+		Ext.form.action.Submit ajax方式提交
+			Ext.form.action.StandardSubmit 原始表单提交方法
+		Ext.form.action.DirectLoad
+			Ext.form.action.DirectSubmit 指令式的模式
+4.字段的控制
+	Ext.form.field.Base 是跟类
+		混入了类 [Ext.form.field.Field]得到表单值的处理功能
+		混入了类[Ext.form.Labelable]得到表单标签错误信息提示的功能
+		Ext.form.field.Text	  文本框方式的
+			Ext.form.field.TextArea	
+			Ext.form.field.Trigger 触发器
+				Ext.form.field.Picker 选择器
+					Ext.form.field.Time
+					Ext.form.field.Date
+					Ext.form.field.Number
+					Ext.form.field.File 文件上传的
+					Ext.form.field.ComboBox 选择框
+		Ext.form.field.Checkbox	选择框方式的
+			Ext.form.field.Radio 单选框			
+		Ext.form.field.Hidden	特殊的-隐藏字段			
+	Ext.form.field.HtmlEditor	特殊的-文本编辑框	
+5.其中夹杂布局的类
+	Ext.form.FieldContainer
+		Ext.form.CheckboxGroup
+			Ext.form.RadioGroup
+	Ext.form.Label
+		Ext.form.Labelable
+	Ext.form.FieldSet
+	Ext.form.FieldContainer
+6.实例讲解
+	Ext.form.Panel
+		重要的配置项
+			title:'',
+			bodyStyle:'',
+			frame : ,
+			height: ,
+			width :,
+			renderTo:'',
+			defaultType:'',
+			defaults:{}
+			由于混入了Ext.form.Labelable
+				可以配置
+					labelSeparator 字段名字和值的分割符号
+					labelWidth 标签宽度
+		重要的方法			
+	Ext.form.field.Text  文本框(xtype: textfield)
+		重要的配置项
+			width : 150,
+			allowBlank: false, //不能是空		
+			labelAlign :'left',
+			msgTarget:'side'//在字段的右面展示数据			
+		重要的方法			
+	
+	Ext.form.field.TextArea	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+								

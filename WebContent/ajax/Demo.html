@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的事件
+	Ext.onReady(function(){
+		
+		function createCh(val,name){
+			var el = document.createElement("option");
+			el.setAttribute("value",val);
+			el.appendChild(document.createTextNode(name));
+			return el;
+		}
+		//绑定修改事件
+		Ext.get("provece").on("change",function(e,select){
+			//获取 select
+			//返回的是html 数据
+			console.log(select);
+			//获取选中的id,就是 value
+			var ids = select.options[select.selectedIndex].value;
+			console.log(ids);
+			
+			//传送 请求
+			Ext.Ajax.request({
+				url:"city.jsp",
+				method:'POST',
+				timeout:3000,
+				//注意参数同意啊
+				params:{cid:ids},
+				success:function(response,opt){
+					//获取返回的数据
+					var date = response.responseText;
+					console.log(date);
+					
+					//删除 以前节点
+					//获取需要添加数据的节点
+					var cityDom = Ext.get("city");
+					//Object { el: Object, dom: <select#city>, id: "city", $cache: Object }
+					console.log(cityDom);
+					//获取节点数目
+					var domlength =cityDom.dom.length; 
+					console.log(domlength);
+					//删除节点
+					if(domlength  >0){
+						console.log("删除节点");
+						for(var i=domlength;i>0;i--){
+							//是dom.options 中下面的数据删除
+							Ext.get("city").dom.options.remove(i);
+						}
+					}
+					
+					//eval解析数据  [{}] 这中数据， 这个方法简单，好用，可以一次解析多个数据
+					var citys = eval(date);
+					//获取index  和 city对象
+					Ext.each(citys,function(city,index){
+						console.log(index+":"+city.name);
+						//添加子节点
+						Ext.get("city").dom.appendChild(createCh(index,city.name));
+					});
+					
+				}				
+			});
+					
+		});
+		
+	})
+	
+</script>
+</head>
+<body>
+	<select name="cid" id="provece">
+		<option value='0'>哈尔滨</option>
+		<option value='1'>武汉</option>
+		<option value='2'>上海</option>
+	</select>
+	<select name="city" id="city">
+	</select>
+</body>
+</html>

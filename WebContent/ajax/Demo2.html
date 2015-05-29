@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的事件
+	Ext.onReady(function(){
+		//通过Ext.Ajax发送ajax请求
+		Ext.Ajax.request({
+			//请求url
+			url:"person.jsp",
+			//传递过去的参数
+			params:{name:"yellowcong"},
+			//请求方式
+			method:"POST",
+			//超时
+			timeout:3000,
+			//成功后的结果
+			success:function(response,options){
+				//返回对象
+				//Object { request: Object, requestId: 1, status: 0, statusText: "communication failure", aborted: undefined, timedout: true }
+				//Object { request: Object, requestId: 1, status: 200, statusText: "OK", getResponseHeader: .createResponse/d.getResponseHeader(), getAllResponseHeaders: .createResponse/d.getAllResponseHeaders(), responseText: "{name:'yellowcong'} ", responseXML: null }
+				console.log(response);
+				//获取返回额数据
+				var result =response.responseText; 
+				console.log(result);
+				//返回String
+				console.log(Ext.typeOf(result));
+				
+				//通过json讲数据转化为 object对象
+				var user = Ext.JSON.decode(result);
+				//返回Object
+				console.log(Ext.typeOf(user));
+				console.log(user.name);
+			},
+			//失败后的结果
+			failure:function(response,options){
+				console.log(response);
+			},
+		});
+	})
+	
+</script>
+</head>
+<body>
+</body>
+</html>

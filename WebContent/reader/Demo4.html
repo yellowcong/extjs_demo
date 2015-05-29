@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的代理操作
+	Ext.onReady(function(){
+		
+		Ext.regModel("User",{
+			fields:[
+				{name:"name",type:"string"}
+			],
+			proxy:{
+				type:"ajax",
+				url:'users.xml',
+				reader:{
+					//解析格式
+					type:"xml",
+					//过滤我们需要的节点
+					record:"user"
+				}
+			}
+			
+		});
+		
+		var user = Ext.ModelMgr.getModel("User");
+		user.load(1,{
+			success:function(model){
+				
+				//返回model
+				//Object { raw: <user>, modified: Object, data: Object, hasListeners: Object, events: Object, stores: Array[0], phantom: false, internalId: 1, id: "User-ext-record-1", dirty: true }
+				console.log(model);
+				
+				//获取对象 包装的对象
+				//Object { name: "yelowcong", id: 1 }
+				var user = model.data;
+				console.log(user);
+				
+				console.log(model.data.name);
+			}
+		});
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

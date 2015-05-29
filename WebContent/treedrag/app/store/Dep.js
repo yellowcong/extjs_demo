@@ -1,0 +1,13 @@
+//定义数据类     
+Ext.define("AM.store.Dep",{
+	extend:"Ext.data.TreeStore",
+	//跟节点的Root
+	defaultRoodId:"root",
+	//代理对象
+	proxy:{
+		type:"ajax",
+		url:"dep.jsp",
+		reader:'json',
+		autoLoad:true
+	}
+})

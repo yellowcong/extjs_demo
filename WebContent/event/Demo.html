@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../resources/js/extjs/resources/css/ext-all.css"/>
+<script type="text/javascript" src="../resources/js/extjs/ext-all.js"></script>
+<script type="text/javascript">
+
+	// 学习Ext的事件
+	Ext.onReady(function(){
+		
+		Ext.define("Children",{
+		
+			extend:"Ext.util.Observable",
+			// 定义构造方法
+			constructor:function(){
+				
+				this.state = "hungry";
+				this.setMilk = function(milk){
+					//添加触发事件,就相当于调用了一个方法
+//					this.fireEvent('hungry',milk);
+					//调用方法
+//					this.drink(milk);
+				};
+				
+				//添加事件
+//				this.addEvents({
+//					    hungry: true,
+//				});
+				//第二种方法,添加事件
+				this.addEvents("hungry");
+				
+				
+				//这个方法，没有注册，但是我们可以调用
+				this.drink  = function(milk){
+					console.log("我喝掉了一瓶"+milk+"牛奶");
+				};
+				
+				
+			}
+		});
+		
+		 var ch = Ext.create('Children',{});
+		 ch.setMilk("蒙牛");
+	})
+	
+</script>
+</head>
+<body>
+</body>
+</html>

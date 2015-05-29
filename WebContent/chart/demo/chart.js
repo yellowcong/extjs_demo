@@ -1,0 +1,35 @@
+Ext.onReady(function(){
+	Ext.get("b1").on("click",function(){
+		b1.show()
+	})
+	Ext.get("b2").on("click",function(){
+		b2.show()
+	})
+	Ext.get("b3").on("click",function(){
+		b3.show()
+	})
+	Ext.get("b4").on("click",function(){
+		b4.show()
+	})
+	Ext.get("b5").on("click",function(){
+		b5.show()
+	})	
+	Ext.get("b6").on("click",function(){
+		b6.show()
+	})
+	Ext.get("b7").on("click",function(){
+		b7.show()
+	})	
+	Ext.get("b8").on("click",function(){
+		b8.show()
+	})
+	Ext.get("b9").on("click",function(){
+		b9.show()
+	})
+	Ext.get("b10").on("click",function(){
+		b10.show()
+	})
+	Ext.get("b11").on("click",function(){
+		b11.show()
+	})
+});
